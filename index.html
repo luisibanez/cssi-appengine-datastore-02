@@ -406,7 +406,74 @@ student_data = student_query.fetch(15)
                     <p><a href="https://cloud.google.com/appengine/docs/python/ndb/modelclass">https://cloud.google.com/appengine/docs/python/ndb/modelclass</a></p>
                 </section>
 
+                <section>
+                    <h1>RELATIONSHIPS</h1>
+                </section>
 
+                <section>
+                    <a href="#" class="image">
+                    <img height="100%" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Lunchbox_1980.jpg/469px-Lunchbox_1980.jpg" alt="Picture of two kids with lunchboxes in their hands">
+                    </a>
+                    <p>The Lunchbox is Mine!</p>
+                </section>
+
+                <section>
+                    <h3>Lunchbox Model</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+class Lunchbox(ndb.Model):
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+    foods = ndb.StringProperty(repeated=True)
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+    drink = ndb.StringProperty()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+    insulated = ndb.BooleanProperty()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+    logo = ndb.BlobProperty()
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Kindergartener Model</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+class Kindergartener(ndb.Model):
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+    name = ndb.StringProperty()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+    birthday = ndb.DateProperty()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+    fav_food = ndb.StringProperty()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+    lunchbox = ndb.StructuredProperty(Lunchbox)
+                    </code></pre>
+                    </div>
+                </section>
 
             </div>
 
