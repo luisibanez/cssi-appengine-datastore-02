@@ -54,6 +54,197 @@
                     <h2>in AppEngine</h2>
                 </section>
 
+                <section>
+                    <h2>Manually</h2>
+                    <h2>Inspecting</h2>
+                    <h2>Datastore</h2>
+                </section>
+
+                <section>
+                    <p>Launching AppEngine App</p>
+                    <div class="fragment">
+                    <pre><code>
+dev_appserver.py --port 9080 --admin_port 9000 .
+                    </code></pre>
+                    <div class="fragment">
+                    <pre><code language-bash>
+Checking for updates to the SDK.
+Starting API server at: http://localhost:59242
+Starting module "default" running at: http://localhost:9080
+Starting admin server at: http://localhost:9000
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>AppEngine Admin</p>
+                    <p><a href="http://localhost:9000">http://localhost:9000</a></p>
+                </section>
+
+                <section>
+                    <a href="#" class="image">
+                    <img width="100%" src="images/AppEngine_admin_interface_01.png" alt="Screenshot of AppEngine admin interface">
+                    </a>
+                    <p>AppEngine Admin Interface</p>
+                </section>
+
+                <section>
+                    <a href="#" class="image">
+                    <img width="100%" src="images/AppEngine_datastore_interface_01.png" alt="Screenshot of Datastore interface with no records">
+                    </a>
+                    <p>AppEngine Datastore Interface</p>
+                </section>
+
+                <section>
+                    <a href="#" class="image">
+                    <img width="100%" src="images/AppEngine_datastore_interface_02.png" alt="Screenshot of Datastore interface with one records">
+                    </a>
+                    <p>AppEngine Datastore Interface</p>
+                </section>
+
+                <section>
+                    <a href="#" class="image">
+                    <img width="100%" src="images/AppEngine_datastore_interface_03.png" alt="Screenshot of Datastore interface with two records">
+                    </a>
+                    <p>AppEngine Datastore Interface</p>
+                </section>
+
+
+                <section>
+                    <h2>Datastore</h2>
+                    <h2>Keys</h2>
+                </section>
+
+                <section>
+                    <h3>Get with Key</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+key = student_instance.put()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+key.get()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+key.get().name
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+self.response.write(key.get().name)
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <a href="#" class="image">
+                    <img width="100%" src="images/AppEngine_datastore_interface_03.png" alt="Screenshot of Datastore interface with two records">
+                    </a>
+                    <p>AppEngine Datastore Interface</p>
+                </section>
+
+                <section>
+                    <a href="#" class="image">
+                    <img width="100%" src="images/AppEngine_datastore_interface_04.png" alt="Screenshot of Datastore interface with record id and key">
+                    </a>
+                    <p>Record Key and Id</p>
+                </section>
+
+                <section>
+                    <h3>Key to Id</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+key = student_instance.put()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+id = key.id()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student = Student.get_by_id(id)
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Id to Key</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+key = ndb.Key('Student', id)
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+key.get()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+key.get().name
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Querying</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_query = Student.query()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_data = student_query.fetch()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+template_values = {
+    'students' : student_data
+}
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+template = JINJA_ENVIRONMENT.get_template('index.html')
+self.response.write(template.render(template_values))
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Keys in URLs</h3>
+                    <div class="fragment">
+                    <p>Get id and navigate to that url</p>
+                    <pre><code class="language-python">
+self.redirect('/view_student?key=%s' % key.urlsafe())
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <p>Get an entity from an ID</p>
+                    <pre><code class="language-python">
+key = ndb.Key(urlsafe=self.request.get("key"))
+student = key.get()
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Query</h3>
+                    <p><a href="https://cloud.google.com/appengine/docs/python/ndb/queryclass">https://cloud.google.com/appengine/docs/python/ndb/queryclass</a></p>
+                </section>
+
+                <section>
+                    <h3>Model</h3>
+                    <p><a href="https://cloud.google.com/appengine/docs/python/ndb/modelclass">https://cloud.google.com/appengine/docs/python/ndb/modelclass</a></p>
+                </section>
+
+
 
             </div>
 
