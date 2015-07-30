@@ -574,7 +574,6 @@ kid_name = kid_data[0].name
                     <h1>Many</h1>
                 </section>
 
-
                 <section>
                     <a href="#" class="image">
                     <img height="100%" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/USWNT_Celebrates.jpg/640px-USWNT_Celebrates.jpg" alt="Picture of women soccer team">
@@ -582,6 +581,137 @@ kid_name = kid_data[0].name
                     <p>Unus pro omnibus!</p>
                 </section>
 
+                <section>
+                    <h3>One to Many</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+class Team(ndb.Model):
+    city = ndb.StringProperty()
+    name = ndb.StringProperty()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+class Player(ndb.Model):
+    team = ndb.KeyProperty(kind='Team')
+    last_name= ndb.StringProperty()
+    position = ndb.StringProperty()
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>One to Many</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+da_bulls= Team(city='Chicago', name='Bulls')
+bulls_key = da_bulls.put()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+drose = Player(team=bulls_key, last_name='Rose', position='Point Guard')
+joakim = Player(team=bulls_key, last_name='Noah', position='Center')
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+drose.put()
+joakim.put()
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Querying</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+player_query = Player.query(Player.team == bulls_key)
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+player_data = player_query.fetch()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+for player in player_data:
+    self.response.out.write('<p>'+player.last_name+'</p>')
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <a href="#" class="image">
+                    <img height="100%" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/USWNT_Celebrates.jpg/640px-USWNT_Celebrates.jpg" alt="Picture of women soccer team">
+                    </a>
+                    <p>Omnes pro uno</p>
+                </section>
+
+                <section>
+                    <h3>One to Many</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+class Player(ndb.Model):
+    last_name= ndb.StringProperty()
+    position = ndb.StringProperty()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+class Team(ndb.Model):
+    city = ndb.StringProperty()
+    name = ndb.StringProperty()
+    player_keys = ndb.KeyProperty(kind='Player', repeated=True)
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>One to Many</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+drose = Player(last_name='Rose', position='Point Guard')
+drose_key = drose.put()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+joakim = Player(last_name='Noah', position='Center')
+joakim_key = joakim.put()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+da_bulls = Team(city='Chicago', name='Bulls')
+da_bulls.player_keys.append(drose_key)
+da_bulls.player_keys.append(joakim_key)
+da_bulls.put()
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Querying</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+bulls_query = Team.query(Team.name == 'Bulls')
+bulls_data = bulls_query.fetch()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+da_bulls = bulls_data[0]
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+for player_key in da_bulls.player_keys:
+     self.response.out.write('<p>'+player_key.get().last_name+'</p>')
+                    </code></pre>
+                    </div>
+                </section>
 
             </div>
 
