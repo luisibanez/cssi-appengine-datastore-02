@@ -204,6 +204,23 @@ key.delete()
                 </section>
 
                 <section>
+                    <h3>Keys in URLs</h3>
+                    <div class="fragment">
+                    <p>Get id and navigate to that url</p>
+                    <pre><code class="language-python">
+self.redirect('/view_student?key=%s' % key.urlsafe())
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <p>Get an entity from an ID</p>
+                    <pre><code class="language-python">
+key = ndb.Key(urlsafe=self.request.get("key"))
+student = key.get()
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
                     <h1>Querying</h1>
                 </section>
 
@@ -277,27 +294,111 @@ student_data = student_query.fetch()
                     </div>
                 </section>
 
-
                 <section>
-                    <h3>Query</h3>
-                    <p><a href="https://cloud.google.com/appengine/docs/python/ndb/queryclass">https://cloud.google.com/appengine/docs/python/ndb/queryclass</a></p>
+                    <h1>Querying</h1>
+                    <h1>& Sorting</h1>
                 </section>
 
                 <section>
-                    <h3>Keys in URLs</h3>
+                    <h3>Sorted Query</h3>
                     <div class="fragment">
-                    <p>Get id and navigate to that url</p>
                     <pre><code class="language-python">
-self.redirect('/view_student?key=%s' % key.urlsafe())
+student_query = Student.query()
                     </code></pre>
                     </div>
                     <div class="fragment">
-                    <p>Get an entity from an ID</p>
                     <pre><code class="language-python">
-key = ndb.Key(urlsafe=self.request.get("key"))
-student = key.get()
+student_query = student_query.filter(Student.university == 'MIT')
                     </code></pre>
                     </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_query = student_query.order(Student.age)
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_data = student_query.fetch()
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Reverse Sorted Query</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_query = Student.query()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_query = student_query.filter(Student.university == 'MIT')
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_query = student_query.order(-Student.age)
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_data = student_query.fetch()
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h1>Querying</h1>
+                    <h1>& Limits</h1>
+                </section>
+
+                <section>
+                    <h3>Limited Query</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_query = Student.query()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_query = student_query.filter(Student.university == 'MIT')
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_data = student_query.fetch(15)
+                    </code></pre>
+                    </div>
+                </section>
+ 
+                <section>
+                    <h3>All Together</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_query = Student.query()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_query = student_query.filter(Student.university == 'MIT')
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_query = student_query.order(-Student.age)
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_data = student_query.fetch(15)
+                    </code></pre>
+                    </div>
+                </section>
+ 
+                <section>
+                    <h3>Query</h3>
+                    <h3>Documentation</h3>
+                    <p><a href="https://cloud.google.com/appengine/docs/python/ndb/queryclass">https://cloud.google.com/appengine/docs/python/ndb/queryclass</a></p>
                 </section>
 
                 <section>
