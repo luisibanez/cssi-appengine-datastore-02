@@ -475,6 +475,98 @@ class Kindergartener(ndb.Model):
                     </div>
                 </section>
 
+                <section>
+                    <h1>Make it so!</h1>
+                </section>
+
+                <section>
+                    <h3>Create & Relate</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+lunchbox_instance = Lunchbox(
+    foods = ["Apple", "Sandwich", "Brocoli"],
+    drink = "Carrot Juice",
+    insulated = True,
+    logo = "string with logo image encoded")
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+lunchbox_key = lunchbox_instance.put()
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Create & Relate</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+kid_instance = Kindergartener(
+    name = "Bart Simpson",
+    birthday = datetime.strptime('Jun 1 2005', '%b %d %Y'),
+    fav_food = "Cheeseburger",
+    lunchbox = lunchbox_key)
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+kid_key = kid_instance.put()
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h1>Get My</h1>
+                    <h1>Lunchbox</h1>
+                </section>
+
+                <section>
+                    <h3>Query</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+kid_query = Kindergartener.query()
+kid_query = kid_query.filter(Kindergartener.name == 'Bart Simpson')
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+kid_data = kid_query.fetch()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+lunchbox_key = kid_data[0].lunchbox
+lunchbox = lunchbox_key.get()
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h1>Whose</h1>
+                    <h1>Lunchbox</h1>
+                    <h1>Is this?</h1>
+                </section>
+
+                <section>
+                    <h3>Query</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+kid_query = Kindergartener.query()
+kid_query = kid_query.filter(Kindergartener.lunchbox == lunchbox_key)
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+kid_data = kid_query.fetch()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+kid_name = kid_data[0].name
+                    </code></pre>
+                    </div>
+                </section>
+
             </div>
 
         </div>
