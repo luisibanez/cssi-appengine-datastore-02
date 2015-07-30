@@ -713,6 +713,65 @@ for player_key in da_bulls.player_keys:
                     </div>
                 </section>
 
+                <section>
+                    <h1>Many</h1>
+                    <h1>To</h1>
+                    <h1>Many</h1>
+                </section>
+
+                <section>
+                    <h3>Many to Many</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+class Fan(ndb.Model):
+    first_name = ndb.StringProperty()
+    last_name = ndb.StringProperty()
+    home_city = ndb.StringProperty()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+class FanTeam(ndb.Model):
+    fan = ndb.KeyProperty(Fan)
+    team = ndb.KeyProperty(Team)
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Many to Many</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+nicki = Fan(first_name='Nicki', last_name='Anselmo', home_city='New Orleans').put()
+norah = Fan(first_name='Norah', last_name='Solo', home_city='New York').put()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+FanTeam(fan=nicki, team=da_bulls).put()
+FanTeam(fan=norah, team=da_bulls).put()
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Many to Many</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+bulls_query = FanTeam.query()
+bulls_query = bulls_query.filter(FanTeam.team==da_bulls)
+bulls_fans = bulls_query.fetch()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+for fan_team in bulls_fans:
+     fan_key = fan_team.get().fan
+     self.response.out.write('<p>'+fan_key.get().last_name+'</p>')
+                    </code></pre>
+                    </div>
+                </section>
+
             </div>
 
         </div>
