@@ -470,7 +470,7 @@ class Kindergartener(ndb.Model):
                     </div>
                     <div class="fragment">
                     <pre><code class="language-python">
-    lunchbox = ndb.StructuredProperty(Lunchbox)
+    lunchbox_key = ndb.KeyProperty(Lunchbox)
                     </code></pre>
                     </div>
                 </section>
@@ -492,7 +492,7 @@ lunchbox_instance = Lunchbox(
                     </div>
                     <div class="fragment">
                     <pre><code class="language-python">
-lunchbox_key = lunchbox_instance.put()
+my_lunchbox_key = lunchbox_instance.put()
                     </code></pre>
                     </div>
                 </section>
@@ -505,7 +505,7 @@ kid_instance = Kindergartener(
     name = "Bart Simpson",
     birthday = datetime.strptime('Jun 1 2005', '%b %d %Y'),
     fav_food = "Cheeseburger",
-    lunchbox = lunchbox_key)
+    lunchbox_key = my_lunchbox_key)
                     </code></pre>
                     </div>
                     <div class="fragment">
@@ -535,8 +535,8 @@ kid_data = kid_query.fetch()
                     </div>
                     <div class="fragment">
                     <pre><code class="language-python">
-lunchbox_key = kid_data[0].lunchbox
-lunchbox = lunchbox_key.get()
+my_lunchbox_key = kid_data[0].lunchbox_key
+my_lunchbox = my_lunchbox_key.get()
                     </code></pre>
                     </div>
                 </section>
@@ -552,7 +552,8 @@ lunchbox = lunchbox_key.get()
                     <div class="fragment">
                     <pre><code class="language-python">
 kid_query = Kindergartener.query()
-kid_query = kid_query.filter(Kindergartener.lunchbox == lunchbox_key)
+kid_query = kid_query.filter(
+                Kindergartener.lunchbox_key == my_lunchbox_key)
                     </code></pre>
                     </div>
                     <div class="fragment">
