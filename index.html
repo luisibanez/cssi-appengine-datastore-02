@@ -108,34 +108,9 @@ Starting admin server at: http://localhost:9000
                     <p>AppEngine Datastore Interface</p>
                 </section>
 
-
                 <section>
                     <h2>Datastore</h2>
                     <h2>Keys</h2>
-                </section>
-
-                <section>
-                    <h3>Get with Key</h3>
-                    <div class="fragment">
-                    <pre><code class="language-python">
-key = student_instance.put()
-                    </code></pre>
-                    </div>
-                    <div class="fragment">
-                    <pre><code class="language-python">
-key.get()
-                    </code></pre>
-                    </div>
-                    <div class="fragment">
-                    <pre><code class="language-python">
-key.get().name
-                    </code></pre>
-                    </div>
-                    <div class="fragment">
-                    <pre><code class="language-python">
-self.response.write(key.get().name)
-                    </code></pre>
-                    </div>
                 </section>
 
                 <section>
@@ -150,6 +125,31 @@ self.response.write(key.get().name)
                     <img width="100%" src="images/AppEngine_datastore_interface_04.png" alt="Screenshot of Datastore interface with record id and key">
                     </a>
                     <p>Record Key and Id</p>
+                </section>
+
+
+                <section>
+                    <h3>Get with Key</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+key = student_instance.put()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_instance_ref = key.get()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+key.get().name
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+self.response.write(key.get().name)
+                    </code></pre>
+                    </div>
                 </section>
 
                 <section>
@@ -191,7 +191,24 @@ key.get().name
                 </section>
 
                 <section>
-                    <h3>Querying</h3>
+                    <h1>Deleting</h1>
+                </section>
+
+                <section>
+                    <h3>Delete with Key</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+key.delete()
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h1>Querying</h1>
+                </section>
+
+                <section>
+                    <h3>Full Query</h3>
                     <div class="fragment">
                     <pre><code class="language-python">
 student_query = Student.query()
@@ -218,6 +235,55 @@ self.response.write(template.render(template_values))
                 </section>
 
                 <section>
+                    <h1>Selective</h1>
+                    <h1>Querying</h1>
+                </section>
+
+                <section>
+                    <h3>Query Filters</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_query = Student.query()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_query = student_query.filter(Student.name == 'Larry')
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_data = student_query.fetch()
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Query Filters</h3>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_query = Student.query()
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_query = student_query.filter(Student.university == 'MIT')
+                    </code></pre>
+                    </div>
+                    <div class="fragment">
+                    <pre><code class="language-python">
+student_data = student_query.fetch()
+                    </code></pre>
+                    </div>
+                </section>
+
+
+                <section>
+                    <h3>Query</h3>
+                    <p><a href="https://cloud.google.com/appengine/docs/python/ndb/queryclass">https://cloud.google.com/appengine/docs/python/ndb/queryclass</a></p>
+                </section>
+
+                <section>
                     <h3>Keys in URLs</h3>
                     <div class="fragment">
                     <p>Get id and navigate to that url</p>
@@ -232,11 +298,6 @@ key = ndb.Key(urlsafe=self.request.get("key"))
 student = key.get()
                     </code></pre>
                     </div>
-                </section>
-
-                <section>
-                    <h3>Query</h3>
-                    <p><a href="https://cloud.google.com/appengine/docs/python/ndb/queryclass">https://cloud.google.com/appengine/docs/python/ndb/queryclass</a></p>
                 </section>
 
                 <section>
